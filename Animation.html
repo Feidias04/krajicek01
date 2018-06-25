@@ -1,0 +1,652 @@
+﻿<HTML>
+ <HEAD>
+  <TITLE>Animation</TITLE>
+ </HEAD>
+ <BODY onLoad="Load()">
+ <FONT FACE=VERDANA SIZE=2><B>Animation</B><BR>
+	<IMG BORDER=1 STYLE="border-color:black" ID="animated_image"><BR>
+<FONT FACE=COURIER SIZE=2>
+<SPAN ID="frame_title" STYLE="position:relative;left:0;top:-15;color:black;background-color:white;padding:1px;border-width:1px;border-style:solid;border-color:black;display:inline;"></SPAN>
+&nbsp;</FONT><BR>
+  <BUTTON ID="btnToggle" onClick="start_stop()" onDblClick="start_stop()">Stop</BUTTON>&nbsp;
+<BUTTON ID="btnFirst" onClick="firstFrame()" onDblClick="firstFrame()" STYLE="width:35">&lt;&lt;</BUTTON>&nbsp;
+  <BUTTON ID="btnPrev" onClick="prevFrame()" onDblClick="prevFrame()" STYLE="width:35">&lt;</BUTTON>&nbsp;
+  <BUTTON ID="btnNext" onClick="nextFrame()" onDblClick="nextFrame()" STYLE="width:35">&gt;</BUTTON>&nbsp;
+  <BUTTON ID="btnLast" onClick="lastFrame()" onDblClick="lastFrame()" STYLE="width:35">&gt;&gt;</BUTTON>
+  <FONT SIZE=1>
+  <BR><BR>&nbsp;&nbsp;&nbsp;<INPUT ID="checkLoop"" TYPE="checkbox" style="width:13;height:13;">Loop continuously
+  <BR>&nbsp;&nbsp;&nbsp;<INPUT ID="checkCounter" TYPE="checkbox" CHECKED onClick="showCounter(this.checked)" style="width:13;height:13;">Show frame counter
+  </FONT>
+  <P>
+  <FONT COLOR=888888 SIZE=1>Animation created in <A TARGET=_blank HREF="http://www.rhino3d.com"><FONT COLOR=7777ff SIZE=1>Rhino</FONT></A>.</FONT>
+ </BODY>
+</HTML>
+
+<STYLE>
+  button {width:75;height:25;font-family:mssansserif;font-size:8pt}
+</STYLE>
+<SCRIPT LANGUAGE="JavaScript">
+  var FRAME_DELAY = 75;
+  var timeoutID;
+  var ImageCount = 500;
+  var Images = new Array();
+  for( i=0; i < ImageCount; i++ )
+  	Images[i] = new Image();
+
+  var currentImageIndex = 0;
+  bDisplayDate = 0;
+
+  var Dates = new Array(0);
+Images[0].src = "Animation000.png"
+Images[1].src = "Animation001.png"
+Images[2].src = "Animation002.png"
+Images[3].src = "Animation003.png"
+Images[4].src = "Animation004.png"
+Images[5].src = "Animation005.png"
+Images[6].src = "Animation006.png"
+Images[7].src = "Animation007.png"
+Images[8].src = "Animation008.png"
+Images[9].src = "Animation009.png"
+Images[10].src = "Animation010.png"
+Images[11].src = "Animation011.png"
+Images[12].src = "Animation012.png"
+Images[13].src = "Animation013.png"
+Images[14].src = "Animation014.png"
+Images[15].src = "Animation015.png"
+Images[16].src = "Animation016.png"
+Images[17].src = "Animation017.png"
+Images[18].src = "Animation018.png"
+Images[19].src = "Animation019.png"
+Images[20].src = "Animation020.png"
+Images[21].src = "Animation021.png"
+Images[22].src = "Animation022.png"
+Images[23].src = "Animation023.png"
+Images[24].src = "Animation024.png"
+Images[25].src = "Animation025.png"
+Images[26].src = "Animation026.png"
+Images[27].src = "Animation027.png"
+Images[28].src = "Animation028.png"
+Images[29].src = "Animation029.png"
+Images[30].src = "Animation030.png"
+Images[31].src = "Animation031.png"
+Images[32].src = "Animation032.png"
+Images[33].src = "Animation033.png"
+Images[34].src = "Animation034.png"
+Images[35].src = "Animation035.png"
+Images[36].src = "Animation036.png"
+Images[37].src = "Animation037.png"
+Images[38].src = "Animation038.png"
+Images[39].src = "Animation039.png"
+Images[40].src = "Animation040.png"
+Images[41].src = "Animation041.png"
+Images[42].src = "Animation042.png"
+Images[43].src = "Animation043.png"
+Images[44].src = "Animation044.png"
+Images[45].src = "Animation045.png"
+Images[46].src = "Animation046.png"
+Images[47].src = "Animation047.png"
+Images[48].src = "Animation048.png"
+Images[49].src = "Animation049.png"
+Images[50].src = "Animation050.png"
+Images[51].src = "Animation051.png"
+Images[52].src = "Animation052.png"
+Images[53].src = "Animation053.png"
+Images[54].src = "Animation054.png"
+Images[55].src = "Animation055.png"
+Images[56].src = "Animation056.png"
+Images[57].src = "Animation057.png"
+Images[58].src = "Animation058.png"
+Images[59].src = "Animation059.png"
+Images[60].src = "Animation060.png"
+Images[61].src = "Animation061.png"
+Images[62].src = "Animation062.png"
+Images[63].src = "Animation063.png"
+Images[64].src = "Animation064.png"
+Images[65].src = "Animation065.png"
+Images[66].src = "Animation066.png"
+Images[67].src = "Animation067.png"
+Images[68].src = "Animation068.png"
+Images[69].src = "Animation069.png"
+Images[70].src = "Animation070.png"
+Images[71].src = "Animation071.png"
+Images[72].src = "Animation072.png"
+Images[73].src = "Animation073.png"
+Images[74].src = "Animation074.png"
+Images[75].src = "Animation075.png"
+Images[76].src = "Animation076.png"
+Images[77].src = "Animation077.png"
+Images[78].src = "Animation078.png"
+Images[79].src = "Animation079.png"
+Images[80].src = "Animation080.png"
+Images[81].src = "Animation081.png"
+Images[82].src = "Animation082.png"
+Images[83].src = "Animation083.png"
+Images[84].src = "Animation084.png"
+Images[85].src = "Animation085.png"
+Images[86].src = "Animation086.png"
+Images[87].src = "Animation087.png"
+Images[88].src = "Animation088.png"
+Images[89].src = "Animation089.png"
+Images[90].src = "Animation090.png"
+Images[91].src = "Animation091.png"
+Images[92].src = "Animation092.png"
+Images[93].src = "Animation093.png"
+Images[94].src = "Animation094.png"
+Images[95].src = "Animation095.png"
+Images[96].src = "Animation096.png"
+Images[97].src = "Animation097.png"
+Images[98].src = "Animation098.png"
+Images[99].src = "Animation099.png"
+Images[100].src = "Animation100.png"
+Images[101].src = "Animation101.png"
+Images[102].src = "Animation102.png"
+Images[103].src = "Animation103.png"
+Images[104].src = "Animation104.png"
+Images[105].src = "Animation105.png"
+Images[106].src = "Animation106.png"
+Images[107].src = "Animation107.png"
+Images[108].src = "Animation108.png"
+Images[109].src = "Animation109.png"
+Images[110].src = "Animation110.png"
+Images[111].src = "Animation111.png"
+Images[112].src = "Animation112.png"
+Images[113].src = "Animation113.png"
+Images[114].src = "Animation114.png"
+Images[115].src = "Animation115.png"
+Images[116].src = "Animation116.png"
+Images[117].src = "Animation117.png"
+Images[118].src = "Animation118.png"
+Images[119].src = "Animation119.png"
+Images[120].src = "Animation120.png"
+Images[121].src = "Animation121.png"
+Images[122].src = "Animation122.png"
+Images[123].src = "Animation123.png"
+Images[124].src = "Animation124.png"
+Images[125].src = "Animation125.png"
+Images[126].src = "Animation126.png"
+Images[127].src = "Animation127.png"
+Images[128].src = "Animation128.png"
+Images[129].src = "Animation129.png"
+Images[130].src = "Animation130.png"
+Images[131].src = "Animation131.png"
+Images[132].src = "Animation132.png"
+Images[133].src = "Animation133.png"
+Images[134].src = "Animation134.png"
+Images[135].src = "Animation135.png"
+Images[136].src = "Animation136.png"
+Images[137].src = "Animation137.png"
+Images[138].src = "Animation138.png"
+Images[139].src = "Animation139.png"
+Images[140].src = "Animation140.png"
+Images[141].src = "Animation141.png"
+Images[142].src = "Animation142.png"
+Images[143].src = "Animation143.png"
+Images[144].src = "Animation144.png"
+Images[145].src = "Animation145.png"
+Images[146].src = "Animation146.png"
+Images[147].src = "Animation147.png"
+Images[148].src = "Animation148.png"
+Images[149].src = "Animation149.png"
+Images[150].src = "Animation150.png"
+Images[151].src = "Animation151.png"
+Images[152].src = "Animation152.png"
+Images[153].src = "Animation153.png"
+Images[154].src = "Animation154.png"
+Images[155].src = "Animation155.png"
+Images[156].src = "Animation156.png"
+Images[157].src = "Animation157.png"
+Images[158].src = "Animation158.png"
+Images[159].src = "Animation159.png"
+Images[160].src = "Animation160.png"
+Images[161].src = "Animation161.png"
+Images[162].src = "Animation162.png"
+Images[163].src = "Animation163.png"
+Images[164].src = "Animation164.png"
+Images[165].src = "Animation165.png"
+Images[166].src = "Animation166.png"
+Images[167].src = "Animation167.png"
+Images[168].src = "Animation168.png"
+Images[169].src = "Animation169.png"
+Images[170].src = "Animation170.png"
+Images[171].src = "Animation171.png"
+Images[172].src = "Animation172.png"
+Images[173].src = "Animation173.png"
+Images[174].src = "Animation174.png"
+Images[175].src = "Animation175.png"
+Images[176].src = "Animation176.png"
+Images[177].src = "Animation177.png"
+Images[178].src = "Animation178.png"
+Images[179].src = "Animation179.png"
+Images[180].src = "Animation180.png"
+Images[181].src = "Animation181.png"
+Images[182].src = "Animation182.png"
+Images[183].src = "Animation183.png"
+Images[184].src = "Animation184.png"
+Images[185].src = "Animation185.png"
+Images[186].src = "Animation186.png"
+Images[187].src = "Animation187.png"
+Images[188].src = "Animation188.png"
+Images[189].src = "Animation189.png"
+Images[190].src = "Animation190.png"
+Images[191].src = "Animation191.png"
+Images[192].src = "Animation192.png"
+Images[193].src = "Animation193.png"
+Images[194].src = "Animation194.png"
+Images[195].src = "Animation195.png"
+Images[196].src = "Animation196.png"
+Images[197].src = "Animation197.png"
+Images[198].src = "Animation198.png"
+Images[199].src = "Animation199.png"
+Images[200].src = "Animation200.png"
+Images[201].src = "Animation201.png"
+Images[202].src = "Animation202.png"
+Images[203].src = "Animation203.png"
+Images[204].src = "Animation204.png"
+Images[205].src = "Animation205.png"
+Images[206].src = "Animation206.png"
+Images[207].src = "Animation207.png"
+Images[208].src = "Animation208.png"
+Images[209].src = "Animation209.png"
+Images[210].src = "Animation210.png"
+Images[211].src = "Animation211.png"
+Images[212].src = "Animation212.png"
+Images[213].src = "Animation213.png"
+Images[214].src = "Animation214.png"
+Images[215].src = "Animation215.png"
+Images[216].src = "Animation216.png"
+Images[217].src = "Animation217.png"
+Images[218].src = "Animation218.png"
+Images[219].src = "Animation219.png"
+Images[220].src = "Animation220.png"
+Images[221].src = "Animation221.png"
+Images[222].src = "Animation222.png"
+Images[223].src = "Animation223.png"
+Images[224].src = "Animation224.png"
+Images[225].src = "Animation225.png"
+Images[226].src = "Animation226.png"
+Images[227].src = "Animation227.png"
+Images[228].src = "Animation228.png"
+Images[229].src = "Animation229.png"
+Images[230].src = "Animation230.png"
+Images[231].src = "Animation231.png"
+Images[232].src = "Animation232.png"
+Images[233].src = "Animation233.png"
+Images[234].src = "Animation234.png"
+Images[235].src = "Animation235.png"
+Images[236].src = "Animation236.png"
+Images[237].src = "Animation237.png"
+Images[238].src = "Animation238.png"
+Images[239].src = "Animation239.png"
+Images[240].src = "Animation240.png"
+Images[241].src = "Animation241.png"
+Images[242].src = "Animation242.png"
+Images[243].src = "Animation243.png"
+Images[244].src = "Animation244.png"
+Images[245].src = "Animation245.png"
+Images[246].src = "Animation246.png"
+Images[247].src = "Animation247.png"
+Images[248].src = "Animation248.png"
+Images[249].src = "Animation249.png"
+Images[250].src = "Animation250.png"
+Images[251].src = "Animation251.png"
+Images[252].src = "Animation252.png"
+Images[253].src = "Animation253.png"
+Images[254].src = "Animation254.png"
+Images[255].src = "Animation255.png"
+Images[256].src = "Animation256.png"
+Images[257].src = "Animation257.png"
+Images[258].src = "Animation258.png"
+Images[259].src = "Animation259.png"
+Images[260].src = "Animation260.png"
+Images[261].src = "Animation261.png"
+Images[262].src = "Animation262.png"
+Images[263].src = "Animation263.png"
+Images[264].src = "Animation264.png"
+Images[265].src = "Animation265.png"
+Images[266].src = "Animation266.png"
+Images[267].src = "Animation267.png"
+Images[268].src = "Animation268.png"
+Images[269].src = "Animation269.png"
+Images[270].src = "Animation270.png"
+Images[271].src = "Animation271.png"
+Images[272].src = "Animation272.png"
+Images[273].src = "Animation273.png"
+Images[274].src = "Animation274.png"
+Images[275].src = "Animation275.png"
+Images[276].src = "Animation276.png"
+Images[277].src = "Animation277.png"
+Images[278].src = "Animation278.png"
+Images[279].src = "Animation279.png"
+Images[280].src = "Animation280.png"
+Images[281].src = "Animation281.png"
+Images[282].src = "Animation282.png"
+Images[283].src = "Animation283.png"
+Images[284].src = "Animation284.png"
+Images[285].src = "Animation285.png"
+Images[286].src = "Animation286.png"
+Images[287].src = "Animation287.png"
+Images[288].src = "Animation288.png"
+Images[289].src = "Animation289.png"
+Images[290].src = "Animation290.png"
+Images[291].src = "Animation291.png"
+Images[292].src = "Animation292.png"
+Images[293].src = "Animation293.png"
+Images[294].src = "Animation294.png"
+Images[295].src = "Animation295.png"
+Images[296].src = "Animation296.png"
+Images[297].src = "Animation297.png"
+Images[298].src = "Animation298.png"
+Images[299].src = "Animation299.png"
+Images[300].src = "Animation300.png"
+Images[301].src = "Animation301.png"
+Images[302].src = "Animation302.png"
+Images[303].src = "Animation303.png"
+Images[304].src = "Animation304.png"
+Images[305].src = "Animation305.png"
+Images[306].src = "Animation306.png"
+Images[307].src = "Animation307.png"
+Images[308].src = "Animation308.png"
+Images[309].src = "Animation309.png"
+Images[310].src = "Animation310.png"
+Images[311].src = "Animation311.png"
+Images[312].src = "Animation312.png"
+Images[313].src = "Animation313.png"
+Images[314].src = "Animation314.png"
+Images[315].src = "Animation315.png"
+Images[316].src = "Animation316.png"
+Images[317].src = "Animation317.png"
+Images[318].src = "Animation318.png"
+Images[319].src = "Animation319.png"
+Images[320].src = "Animation320.png"
+Images[321].src = "Animation321.png"
+Images[322].src = "Animation322.png"
+Images[323].src = "Animation323.png"
+Images[324].src = "Animation324.png"
+Images[325].src = "Animation325.png"
+Images[326].src = "Animation326.png"
+Images[327].src = "Animation327.png"
+Images[328].src = "Animation328.png"
+Images[329].src = "Animation329.png"
+Images[330].src = "Animation330.png"
+Images[331].src = "Animation331.png"
+Images[332].src = "Animation332.png"
+Images[333].src = "Animation333.png"
+Images[334].src = "Animation334.png"
+Images[335].src = "Animation335.png"
+Images[336].src = "Animation336.png"
+Images[337].src = "Animation337.png"
+Images[338].src = "Animation338.png"
+Images[339].src = "Animation339.png"
+Images[340].src = "Animation340.png"
+Images[341].src = "Animation341.png"
+Images[342].src = "Animation342.png"
+Images[343].src = "Animation343.png"
+Images[344].src = "Animation344.png"
+Images[345].src = "Animation345.png"
+Images[346].src = "Animation346.png"
+Images[347].src = "Animation347.png"
+Images[348].src = "Animation348.png"
+Images[349].src = "Animation349.png"
+Images[350].src = "Animation350.png"
+Images[351].src = "Animation351.png"
+Images[352].src = "Animation352.png"
+Images[353].src = "Animation353.png"
+Images[354].src = "Animation354.png"
+Images[355].src = "Animation355.png"
+Images[356].src = "Animation356.png"
+Images[357].src = "Animation357.png"
+Images[358].src = "Animation358.png"
+Images[359].src = "Animation359.png"
+Images[360].src = "Animation360.png"
+Images[361].src = "Animation361.png"
+Images[362].src = "Animation362.png"
+Images[363].src = "Animation363.png"
+Images[364].src = "Animation364.png"
+Images[365].src = "Animation365.png"
+Images[366].src = "Animation366.png"
+Images[367].src = "Animation367.png"
+Images[368].src = "Animation368.png"
+Images[369].src = "Animation369.png"
+Images[370].src = "Animation370.png"
+Images[371].src = "Animation371.png"
+Images[372].src = "Animation372.png"
+Images[373].src = "Animation373.png"
+Images[374].src = "Animation374.png"
+Images[375].src = "Animation375.png"
+Images[376].src = "Animation376.png"
+Images[377].src = "Animation377.png"
+Images[378].src = "Animation378.png"
+Images[379].src = "Animation379.png"
+Images[380].src = "Animation380.png"
+Images[381].src = "Animation381.png"
+Images[382].src = "Animation382.png"
+Images[383].src = "Animation383.png"
+Images[384].src = "Animation384.png"
+Images[385].src = "Animation385.png"
+Images[386].src = "Animation386.png"
+Images[387].src = "Animation387.png"
+Images[388].src = "Animation388.png"
+Images[389].src = "Animation389.png"
+Images[390].src = "Animation390.png"
+Images[391].src = "Animation391.png"
+Images[392].src = "Animation392.png"
+Images[393].src = "Animation393.png"
+Images[394].src = "Animation394.png"
+Images[395].src = "Animation395.png"
+Images[396].src = "Animation396.png"
+Images[397].src = "Animation397.png"
+Images[398].src = "Animation398.png"
+Images[399].src = "Animation399.png"
+Images[400].src = "Animation400.png"
+Images[401].src = "Animation401.png"
+Images[402].src = "Animation402.png"
+Images[403].src = "Animation403.png"
+Images[404].src = "Animation404.png"
+Images[405].src = "Animation405.png"
+Images[406].src = "Animation406.png"
+Images[407].src = "Animation407.png"
+Images[408].src = "Animation408.png"
+Images[409].src = "Animation409.png"
+Images[410].src = "Animation410.png"
+Images[411].src = "Animation411.png"
+Images[412].src = "Animation412.png"
+Images[413].src = "Animation413.png"
+Images[414].src = "Animation414.png"
+Images[415].src = "Animation415.png"
+Images[416].src = "Animation416.png"
+Images[417].src = "Animation417.png"
+Images[418].src = "Animation418.png"
+Images[419].src = "Animation419.png"
+Images[420].src = "Animation420.png"
+Images[421].src = "Animation421.png"
+Images[422].src = "Animation422.png"
+Images[423].src = "Animation423.png"
+Images[424].src = "Animation424.png"
+Images[425].src = "Animation425.png"
+Images[426].src = "Animation426.png"
+Images[427].src = "Animation427.png"
+Images[428].src = "Animation428.png"
+Images[429].src = "Animation429.png"
+Images[430].src = "Animation430.png"
+Images[431].src = "Animation431.png"
+Images[432].src = "Animation432.png"
+Images[433].src = "Animation433.png"
+Images[434].src = "Animation434.png"
+Images[435].src = "Animation435.png"
+Images[436].src = "Animation436.png"
+Images[437].src = "Animation437.png"
+Images[438].src = "Animation438.png"
+Images[439].src = "Animation439.png"
+Images[440].src = "Animation440.png"
+Images[441].src = "Animation441.png"
+Images[442].src = "Animation442.png"
+Images[443].src = "Animation443.png"
+Images[444].src = "Animation444.png"
+Images[445].src = "Animation445.png"
+Images[446].src = "Animation446.png"
+Images[447].src = "Animation447.png"
+Images[448].src = "Animation448.png"
+Images[449].src = "Animation449.png"
+Images[450].src = "Animation450.png"
+Images[451].src = "Animation451.png"
+Images[452].src = "Animation452.png"
+Images[453].src = "Animation453.png"
+Images[454].src = "Animation454.png"
+Images[455].src = "Animation455.png"
+Images[456].src = "Animation456.png"
+Images[457].src = "Animation457.png"
+Images[458].src = "Animation458.png"
+Images[459].src = "Animation459.png"
+Images[460].src = "Animation460.png"
+Images[461].src = "Animation461.png"
+Images[462].src = "Animation462.png"
+Images[463].src = "Animation463.png"
+Images[464].src = "Animation464.png"
+Images[465].src = "Animation465.png"
+Images[466].src = "Animation466.png"
+Images[467].src = "Animation467.png"
+Images[468].src = "Animation468.png"
+Images[469].src = "Animation469.png"
+Images[470].src = "Animation470.png"
+Images[471].src = "Animation471.png"
+Images[472].src = "Animation472.png"
+Images[473].src = "Animation473.png"
+Images[474].src = "Animation474.png"
+Images[475].src = "Animation475.png"
+Images[476].src = "Animation476.png"
+Images[477].src = "Animation477.png"
+Images[478].src = "Animation478.png"
+Images[479].src = "Animation479.png"
+Images[480].src = "Animation480.png"
+Images[481].src = "Animation481.png"
+Images[482].src = "Animation482.png"
+Images[483].src = "Animation483.png"
+Images[484].src = "Animation484.png"
+Images[485].src = "Animation485.png"
+Images[486].src = "Animation486.png"
+Images[487].src = "Animation487.png"
+Images[488].src = "Animation488.png"
+Images[489].src = "Animation489.png"
+Images[490].src = "Animation490.png"
+Images[491].src = "Animation491.png"
+Images[492].src = "Animation492.png"
+Images[493].src = "Animation493.png"
+Images[494].src = "Animation494.png"
+Images[495].src = "Animation495.png"
+Images[496].src = "Animation496.png"
+Images[497].src = "Animation497.png"
+Images[498].src = "Animation498.png"
+Images[499].src = "Animation499.png"
+
+
+
+  function Load() {
+    begin_animation();
+  }
+
+  function begin_animation() {
+    stop_animation();
+  	EnableCtrls("stop");
+  	run();
+        bRunning = true;
+  }
+
+  function stop_animation() {
+  	EnableCtrls("start");
+  	clearTimeout( timeoutID );
+        bRunning = false;
+  }
+
+  function start_stop() {
+    if (bRunning) {
+      stop_animation();
+    }
+    else {
+      begin_animation();
+    }
+  }
+
+  function run() {
+  	if (nextFrame())
+    	timeoutID = setTimeout( "run()", FRAME_DELAY );
+  }
+
+  function firstFrame() {
+	currentImageIndex = 0;
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  }
+
+  function prevFrame() {
+  	currentImageIndex--;
+  	if( currentImageIndex < 0 )
+  		currentImageIndex= Images.length - 1;
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  }
+
+  function nextFrame() {
+  	currentImageIndex++;
+  	bRetVal = true;
+  	if( currentImageIndex >= Images.length ) {
+  	  if (document.all('checkLoop').checked) {
+    		currentImageIndex = 0;
+  	  }
+  	  else {
+  	    stop_animation();
+  	    currentImageIndex = 0;
+  	    bRetVal = false;
+        return bRetVal;
+  	  }
+  	}
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  	return bRetVal;
+  }
+
+  function lastFrame() {
+	currentImageIndex = Images.length - 1;
+  	document.all.animated_image.src = Images[currentImageIndex].src;
+  	DisplayCaption(currentImageIndex)
+  }
+
+ function DisplayCaption(nFrameNumber) {
+	  document.all.frame_title.innerHTML =  (nFrameNumber + 1)
+ if (bDisplayDate) {
+    	document.all.frame_title.innerHTML = Dates[nFrameNumber];
+ }
+  }
+
+
+  function EnableCtrls(sCtl) {
+	if (sCtl == "stop") {
+		//document.all("btnStop").disabled = false;
+		//document.all("btnStart").disabled = true;
+
+		document.all("btnFirst").disabled = true; 
+		document.all("btnPrev").disabled = true; 
+		document.all("btnNext").disabled = true; 
+		document.all("btnLast").disabled = true; 
+                document.all("btnToggle").innerText = "Stop";
+	}
+	if (sCtl == "start") {
+		//document.all("btnStop").disabled = true; 
+		//document.all("btnStart").disabled = false;
+
+		document.all("btnFirst").disabled = false;
+		document.all("btnPrev").disabled = false;
+		document.all("btnNext").disabled = false;
+		document.all("btnLast").disabled = false;
+                document.all("btnToggle").innerText = "Start";
+	}
+  }
+
+  function showCounter(bShow) {
+    if (bShow) {
+      document.all('frame_title').style.display = "inline";
+    }
+    else {
+      document.all('frame_title').style.display = "none";
+    }
+  }
+</SCRIPT>
